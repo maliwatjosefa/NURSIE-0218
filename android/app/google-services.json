@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "604072713836",
+    "project_id": "finalnursie",
+    "storage_bucket": "finalnursie.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604072713836:android:e455914ecf3675d75d0249",
+        "android_client_info": {
+          "package_name": "com.example.nursie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604072713836-j0vm5hbpej8u0ojd8tnp010ahlc1k34s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzAzEmHu5CtFuzWDQFDxryYl6qVccynvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604072713836-j0vm5hbpej8u0ojd8tnp010ahlc1k34s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

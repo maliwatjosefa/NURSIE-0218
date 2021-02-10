@@ -1,0 +1,101 @@
+name: nursie
+description: A new Flutter project.
+
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  percent_indicator: ^2.1.9
+  firebase_core: ^0.7.0
+  flutter_icons: ^1.1.0
+  provider: ^4.3.3
+  flutter_local_notifications: ^4.0.0
+  flutter_datetime_picker: ^1.5.0
+  cloud_firestore: ^0.16.0
+  firebase_auth: ^0.20.0+1
+  firebase: ^8.0.0
+  firebase_storage: ^7.0.0
+  flutter_swiper: ^1.1.6
+  google_sign_in: ^4.5.4
+  font_awesome_flutter: ^8.11.0
+  flutter_svg: ^0.19.2+1
+  animated_floatactionbuttons: ^0.1.0
+  carousel_slider: ^2.0.0
+  
+  firebase_database: ^6.0.0
+  #auth: ^7.3.2
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test: 
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/facebook.png
+    - assets/images/google.png
+    - assets/images/LOGO.png
+    - assets/images/sign_wp.png
+    - assets/images/signup_wp.png
+    - assets/images/dashboard_LOGO.png
+    - assets/images/remedy.png
+    - assets/images/reports.png
+    - assets/images/reminder.png
+    - assets/images/reminder_LOGO.png
+    - assets/images/add_wp.png
+    - assets/images/newmed_LOGO.png
+    - assets/images/nursieF.png
+    - assets/images/user.png
+    - assets/images/diary.png
+    - assets/images/dashboard_wp.png
+    - assets/images/settings.svg
+    - assets/images/user.svg
+    - assets/images/camera.svg
+    - assets/images/profilepic.jpg
+    - assets/images/alarm_wp.png
+    - assets/images/jcard.png
+    - assets/images/medcard.png
+    - assets/images/homecard.png
+    - assets/images/usercard.png
+    - assets/images/reportcard.png
+    - assets/images/profileHeader.png
+    - assets/images/fever.png
+    - assets/images/colds.png
+    - assets/images/cough.png
+    - assets/images/headache.png
+    - assets/images/journalHeader.png
+    - assets/images/stomach.png
+    - assets/images/taste.png
+    - assets/images/feverHeader.png
+    - assets/images/1cluster.png
+    - assets/images/1forehead.png
+    - assets/images/1neck.png
+    - assets/images/1sinus.png
+    - assets/images/1side.png
+    - assets/images/1temples.png
+    - assets/images/2light.png
+    - assets/images/2nausea.png
+    - assets/images/2pulsing.png
+    - assets/images/2sound.png
+    - assets/images/2vomit.png
+    - assets/images/headacheHeader.png
+    - assets/images/painscale.png
+    - assets/images/bottom.png
+    - assets/images/bottomDesign.png
+    - assets/images/lower.png
+    - assets/images/pageInfo.png
+    - assets/images/tape.png
+    - assets/images/tape2.png
+    - assets/images/upperPart.png
+    - assets/images/reportsHeader.png
+    - assets/images/remediesHeader.png
+    - assets/images/forgotpw.png
