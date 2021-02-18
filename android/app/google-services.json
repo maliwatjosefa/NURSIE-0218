@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "604072713836",
+    "firebase_url": "https://finalnursie-default-rtdb.firebaseio.com",
     "project_id": "finalnursie",
     "storage_bucket": "finalnursie.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "604072713836-4bk5mhjru6btl8crvnm63qk4p6dklbe1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nursie",
+            "certificate_hash": "22b5b951f4adc03837b7af21702de2d921005660"
+          }
+        },
         {
           "client_id": "604072713836-j0vm5hbpej8u0ojd8tnp010ahlc1k34s.apps.googleusercontent.com",
           "client_type": 3

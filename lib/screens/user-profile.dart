@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nursie/screens/LoginScreen.dart';
 import 'package:nursie/authentication/user-details.dart';
 import 'package:nursie/screens/dashboard.dart';
@@ -17,21 +18,7 @@ class Body extends StatefulWidget {
   _BodyState createState() => _BodyState();
 }
 
-// enum AuthStatus {
-//   notSignedIn
-// }
-
 class _BodyState extends State<Body> {
-  // AuthStatus authStatus = AuthStatus.notSignedIn;
-
-  // void _signedOut() {
-  //   setState() {
-  //     authStatus = AuthStatus.notSignedIn;
-  //   }
-  // }
-
-  final auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -186,18 +173,26 @@ class Settings extends StatelessWidget {
   }
 }
 
-class SignOut extends StatelessWidget {
-  // SignOut({this.onSignedOut, this.userAuth});
-  // final VoidCallback onSignedOut;
-  // final UserAuth userAuth;
+class SignOut extends StatefulWidget {
+  @override
+  _SignOutState createState() => _SignOutState();
+}
 
-  // // void _signOut() async {
-  // //   try {
-  // //     await userAuth.signOut();
-  // //   } catch (e) {
-  // //     print(e);
-  // //   }
-  // // }
+class _SignOutState extends State<SignOut> {
+
+  bool _isLoggedIn = false;
+
+  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  _logout(){
+    _googleSignIn.signOut();
+    setState(() {
+      _isLoggedIn = false;
+    });
+    print('logged out!')
+    ;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -208,10 +203,10 @@ class SignOut extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             color: Color(0xFFadddcf),
             onPressed: () {
-              //_signOut();
+              _logout();
 
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Dashboard()));
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
             },
             child: Row(
               children: <Widget>[
@@ -227,3 +222,5 @@ class SignOut extends StatelessWidget {
             )));
   }
 }
+
+

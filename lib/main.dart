@@ -10,21 +10,6 @@ void main() async {
   runApp(MyApp());
 }
 
-// // Map<int, Color> color = {
-// //   50: Color.fromRGBO(173, 221, 207, .1),
-// //   100: Color.fromRGBO(173, 221, 207, .2),
-// //   200: Color.fromRGBO(173, 221, 207, .3),
-// //   300: Color.fromRGBO(173, 221, 207, .4),
-// //   400: Color.fromRGBO(173, 221, 207, .5),
-// //   500: Color.fromRGBO(173, 221, 207, .6),
-// //   600: Color.fromRGBO(173, 221, 207, .7),
-// //   700: Color.fromRGBO(173, 221, 207, .8),
-// //   800: Color.fromRGBO(173, 221, 207, .9),
-// //   900: Color.fromRGBO(173, 221, 207, 1),
-// // };
-
-// MaterialColor colorCustom = MaterialColor(0xFFADDDCF, color);
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,7 +21,7 @@ class MyApp extends StatelessWidget {
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(), 
-      //JournalPage(),
+      
       title: 'Nursie',
       theme: ThemeData(
           //primarySwatch: colorCustom,

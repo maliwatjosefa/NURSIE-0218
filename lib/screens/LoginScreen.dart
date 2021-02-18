@@ -1,17 +1,18 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nursie/authentication/user-data.dart';
 import 'package:nursie/authentication/user-details.dart';
+import 'package:nursie/main.dart';
 import 'package:nursie/screens/SignupScreen.dart';
 import 'package:nursie/screens/dashboard.dart';
 import 'package:nursie/screens/forgotPW.dart';
 import 'package:provider/provider.dart';
-
-import 'package:nursie/TEST/test.dart';
-
-// GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
-//    'email',
-// ]);
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,28 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  // GoogleSignInAccount _currentUser;
-  
-  // void initState() {
-  //   super.initState();
-  //   _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-  //     setState(() {
-  //       _currentUser = account;
-  //     });
-  //     if (_currentUser != null) {
-  //       Navigator.push(context, 
-  //         MaterialPageRoute(builder: (context) => TestPage()));
-  //     }
-  //    });
-  // }
+  static final FacebookLogin facebookSignIn = new FacebookLogin();
 
-  // Future<void> _handleSignIn() async {
-  //   try {
-  //     await _googleSignIn.signIn();
-  //   } catch (error) { 
-  //     print(error);
-  //   }
-  // }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String name = '', image;
+
+  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 220),
+                              SizedBox(height: 210),
                               TextFormField(
                                 controller: _emailController,
                                 obscureText: false,
@@ -118,10 +104,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ForgotPassword()));
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ForgotPassword()));
                                     },
                                     child: Container(
                                       child: Text(
@@ -161,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         Dashboard()));
-                                                       
                                           });
                                     }
                                   },
@@ -183,53 +168,124 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (ctx) =>
-                                                  SignupScreen()));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(23),
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                        image:
-                                            AssetImage('assets/images/facebook.png'),
-                                      )),
-                                    ),
-                                  ),
-                                  SizedBox(width: 30,),
-                                  InkWell(
-                                    onTap: () {
-                                      //_handleSignIn();
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(23),
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                        image:
-                                            AssetImage('assets/images/google.png'),
-                                      )),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Column(
+                                        children: <Widget>[
+                                          SignInButton(
+                                            Buttons.Facebook,
+                                            onPressed: () async {
+                                              final FacebookLoginResult result =
+                                                  await facebookSignIn
+                                                      .logIn(['email']);
 
-                             
-                                  // SignInButton(
-                                  // Buttons.Google, 
-                                  //   text: 'Sign in with Google', 
-                                  //   onPressed: () {
-                                  //     _handleSignIn();
-                                  //   },),
-                              
+                                              switch (result.status) {
+                                                case FacebookLoginStatus
+                                                    .loggedIn:
+                                                  final FacebookAccessToken
+                                                      accessToken =
+                                                      result.accessToken;
+                                                  final graphResponse =
+                                                      await http.get(
+                                                          'https://graph.facebook.com/v2.12/me?fields=first_name,picture&access_token=${accessToken.token}');
+                                                  final profile = jsonDecode(
+                                                      graphResponse.body);
+                                                  print(profile);
+                                                  setState(() {
+                                                    name =
+                                                        profile['first_name'];
+                                                    image = profile['picture']
+                                                        ['data']['url'];
+                                                  });
+                                                  print('''
+                                                        Logged in!
+                                                        
+                                                        Token: ${accessToken.token}
+                                                        User id: ${accessToken.userId}
+                                                        Expires: ${accessToken.expires}
+                                                        Permissions: ${accessToken.permissions}
+                                                        Declined permissions: ${accessToken.declinedPermissions}
+                                                        ''');
+                                                  break;
+                                                case FacebookLoginStatus
+                                                    .cancelledByUser:
+                                                  print(
+                                                      'Login cancelled by the user.');
+                                                  break;
+                                                case FacebookLoginStatus.error:
+                                                  print(
+                                                      'Something went wrong with the login process.\n'
+                                                      'Here\'s the error Facebook gave us: ${result.errorMessage}');
+                                                  break;
+                                              }
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (ctx) =>
+                                                          Dashboard()));
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Column(
+                                        children: <Widget>[
+                                          SignInButton(Buttons.GoogleDark,
+                                              onPressed: () async {
+                                            // try {
+                                            //   final GoogleSignIn _googleSignIn =
+                                            //       GoogleSignIn(
+                                            //     scopes: ['email'],
+                                            //   );
+                                            //   final FirebaseAuth _auth =
+                                            //       FirebaseAuth.instance;
+
+                                            //   final GoogleSignInAccount
+                                            //       googleUser =
+                                            //       await _googleSignIn.signIn();
+                                            //   final GoogleSignInAuthentication
+                                            //       googleAuth = await googleUser
+                                            //           .authentication;
+
+                                            //   final AuthCredential credential =
+                                            //       GoogleAuthProvider.credential(
+                                            //     accessToken:
+                                            //         googleAuth.accessToken,
+                                            //     idToken: googleAuth.idToken,
+                                            //   );
+
+                                            //   final User user = (await _auth
+                                            //           .signInWithCredential(
+                                            //               credential))
+                                            //       .user;
+                                            //   print("signed in " +
+                                            //       user.displayName);
+
+                                            //   return user;
+                                            // } catch (e) {
+                                            //   print(e.message);
+                                            // }
+                                            login();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (ctx) =>
+                                                        Dashboard()));
+                                          }),
+                                        ],
+                                      ),
+                                    )
+                                  ]),
                               SizedBox(
-                                height: 25,
+                                height: 30,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -271,4 +327,25 @@ class _LoginScreenState extends State<LoginScreen> {
               }),
             )));
   }
+  void login() async {
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      // you can add extras if you require
+    ],
+  );
+
+  _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
+    GoogleSignInAuthentication auth = await acc.authentication;
+    print(acc.id);
+    print(acc.email);
+    print(acc.displayName);
+    print(acc.photoUrl);
+
+    acc.authentication.then((GoogleSignInAuthentication auth) async {
+      print(auth.idToken);
+      print(auth.accessToken);
+    });
+  });
+}
 }

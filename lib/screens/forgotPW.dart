@@ -11,8 +11,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   String _email;
   final auth = FirebaseAuth.instance;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +74,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     onPressed: () {
                                       auth.sendPasswordResetEmail(email: _email);
                                       Navigator.of(context).pop();
+
+                                      _showAlertDialog();
                                     },
                                     
                                     child: Text("Send reset link",
@@ -84,6 +84,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18)),
+                                            
                                   ),
                                 ),
                               ),
@@ -117,4 +118,29 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ]),
         ));
   }
+
+   void _showAlertDialog()
+  {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context)
+          {
+              return AlertDialog(
+                //title: new Text('Link for Password Reset sent!'),
+                content: new Text('Link for Password Reset sent!\n\nPlease check your inbox.'),
+                actions: <Widget>[
+                  new FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: new Text('OK')
+                  )
+                ],
+              );
+          }
+      );
+  }
 }
+
+
+
+

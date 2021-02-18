@@ -96,6 +96,8 @@ class _AddAlarmState extends State<AddAlarm> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => MedReminder()));
+                        
+                        _showAlertDialog();
                       },
                       child: Text("Save",
                           textAlign: TextAlign.center,
@@ -116,5 +118,26 @@ class _AddAlarmState extends State<AddAlarm> {
     setState(() {
       _selectedTime = picked;
     });
+  }
+
+  void _showAlertDialog()
+  {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context)
+          {
+              return AlertDialog(
+                
+                content: new Text('Reminder set at \n\n$_selectedTime'),
+                actions: <Widget>[
+                  new FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: new Text('OK')
+                  )
+                ],
+              );
+          }
+      );
   }
 }

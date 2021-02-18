@@ -27,6 +27,9 @@ dependencies:
   flutter_svg: ^0.19.2+1
   animated_floatactionbuttons: ^0.1.0
   carousel_slider: ^2.0.0
+  flutter_signin_button: ^1.1.0
+  flutter_facebook_login: ^3.0.0
+  flutter_facebook_auth: ^0.2.3
   
   firebase_database: ^6.0.0
   #auth: ^7.3.2

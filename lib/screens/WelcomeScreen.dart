@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+
 import 'package:nursie/screens/LoginScreen.dart';
 import 'package:nursie/screens/dashboard.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -7,7 +8,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(milliseconds: 1500), () {
+    Timer(Duration(milliseconds: 2000), () {
       Navigator.push(
           context, MaterialPageRoute(builder: (ctx) => Welcome()));
     });
